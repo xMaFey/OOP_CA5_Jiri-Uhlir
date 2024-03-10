@@ -26,6 +26,16 @@ public class App
                     System.out.println("User: " + game.toString());
             }
 
+            System.out.println("\nCall findGameByID");
+            int gameId = 110;
+
+            Games game = IUserDao.findGameByID(gameId);
+
+            if( game != null ) // null returned if userid and password not valid
+                System.out.println("Game found: " + game);
+            else
+                System.out.println("Game with that ID not found");
+
         }
         catch(DaoException e )
         {
