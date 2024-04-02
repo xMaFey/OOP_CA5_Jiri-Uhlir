@@ -2,6 +2,7 @@ package DTOs;
 
 import java.util.Date;
 
+//Jiri Uhlir
 public class Games {
     private int id;
     private String gameTitle;

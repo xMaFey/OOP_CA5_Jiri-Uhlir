@@ -123,4 +123,94 @@ public class MySqlGamesDao extends MySqlDao implements GamesDaoInterface
                 return game;     // reference to User object, or null value
         }
 
+        //John Nally
+        @Override
+        public Games deleteGameByID ( int game_id) throws DaoException {
+                Connection connection = null;
+                PreparedStatement preparedStatement = null;
+                ResultSet resultSet = null;
+                Games deletedGame = null;
+
+                try {
+                        connection = this.getConnection();
+                        String query = "DELETE FROM GAMES WHERE id = ?";
+                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, game_id);
+
+                        deletedGame = findGameByID(game_id);
+
+                        preparedStatement.executeUpdate();
+
+                } catch (SQLException e) {
+                        throw new DaoException("deleteGameByID() " + e.getMessage());
+                } finally {
+                        try {
+                                if (resultSet != null) {
+                                        resultSet.close();
+                                }
+                                if (preparedStatement != null) {
+                                        preparedStatement.close();
+                                }
+
+                                if (connection != null) {
+                                        connection.close();
+                                }
+                        } catch (SQLException e) {
+                                throw new DaoException("deleteGameByID() " + e.getMessage());
+                        }
+                }
+                return deletedGame;
+        }
+
+        //John Nally
+//        @Override
+//        public void insertGame (Games games) throws DaoException {
+//                Connection connection = null;
+//                PreparedStatement preparedStatement = null;
+//
+//                connection = this.getConnection();
+//
+//                String query = "INSERT INTO games (id, gameTitle, developer, price, gbOfSpace, releaseDate) VALUES (?, ?, ?, ?, ?, ?)";
+//
+//                try {
+//                        preparedStatement = connection.prepareStatement(query);
+//
+//                        preparedStatement.setInt(1, games.getId());
+//                        preparedStatement.setString(2, games.getGameTitle());
+//                        preparedStatement.setString(3, games.getDeveloper());
+//                        preparedStatement.setInt(4, games.getPrice());
+//                        preparedStatement.setFloat(5, games.getGbOfSpace());
+//                        java.util.Date utilDate = games.getRealeaseDate();
+//                        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+//                        preparedStatement.setDate(6, sqlDate);
+//                        preparedStatement.executeUpdate();
+//                } catch (SQLException e) {
+//                        throw new RuntimeException(e);
+//                }
+//        }
+
+        @Override
+        public Games findById(int id){
+                return null;
+        }
+
+        @Override
+        public void updatePriceById(int id, int newPrice){
+                Connection connection = null;
+
+                try{
+                        connection = this.getConnection();
+                        String sq1 = "UPDATE games SET price=? WHERE id=?";
+                        PreparedStatement statement = connection.prepareStatement(sq1);
+                        statement.setInt(1, newPrice);
+                        statement.setInt(2, id);
+                        statement.executeUpdate();
+                        System.out.println("Price updated successfully for game with ID: " + id);
+
+                } catch(SQLException e){
+                        e.printStackTrace();
+                }
+
+        }
+
 }
