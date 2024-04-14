@@ -1,3 +1,4 @@
+
 package DAOs;
 
 import DTOs.Games;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class MySqlGamesDao extends MySqlDao implements GamesDaoInterface
 {
+        //Jiri
         @Override
         public List<Games> findAllGames() throws DaoException {
                 Connection connection = null;
@@ -69,6 +71,7 @@ public class MySqlGamesDao extends MySqlDao implements GamesDaoInterface
                 return gamesList;     // may be empty
         }
 
+        //Ben
         @Override
         public Games findGameByID(int game_ID) throws DaoException
         {
@@ -189,11 +192,13 @@ public class MySqlGamesDao extends MySqlDao implements GamesDaoInterface
 //                }
 //        }
 
+        //Jiri
         @Override
         public Games findById(int id){
                 return null;
         }
 
+        //Jiri
         @Override
         public void updatePriceById(int id, int newPrice){
                 Connection connection = null;
@@ -210,7 +215,39 @@ public class MySqlGamesDao extends MySqlDao implements GamesDaoInterface
                 } catch(SQLException e){
                         e.printStackTrace();
                 }
-
         }
 
+        //Jiri - Feature 8
+        @Override
+        public Games findGameByTitle(String gameTitle) throws DaoException{
+                Connection connection = null;
+                PreparedStatement preparedStatement = null;
+                ResultSet resultSet = null;
+                Games game = null;
+
+                try{
+                        connection = this.getConnection();
+
+                        String query = "SELECT * FROM games WHERE gameTitle = ?";
+                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, gameTitle);
+
+                        resultSet = preparedStatement.executeQuery();
+                        if(resultSet.next()){
+                                int id = resultSet.getInt("id");
+                                String developer = resultSet.getString("developer");
+                                int price = resultSet.getInt("price");
+                                float gbOfSpace = resultSet.getFloat("gbOfSpace");
+                                Date releaseDate = resultSet.getDate("releaseDate");
+
+                                game = new Games(id, gameTitle, developer, price, gbOfSpace, releaseDate);
+                        }
+                }
+
+                catch(SQLException e){
+                        throw new DaoException("findGameByTitle() " + e.getMessage());
+                }
+
+                return game;
+        }
 }

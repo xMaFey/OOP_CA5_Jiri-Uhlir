@@ -1,4 +1,8 @@
+
 package GamesObjects;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 import java.util.Date;
@@ -63,6 +67,16 @@ public class App
             //Jiri
             IUserDao.updatePriceById(101, 50);
 
+            //Jiri - Feature 8
+            String gameTitle = "Minecraft";
+            Games gameOne = IUserDao.findGameByTitle(gameTitle);
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String jsonString = (gson).toJson(gameOne);
+
+            System.out.println("JSON String for game '" + gameTitle +"':");
+            System.out.println(jsonString);
+
         }
         catch(DaoException e )
         {
@@ -77,4 +91,3 @@ public class App
         }
     }
 }
-

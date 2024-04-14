@@ -1,3 +1,4 @@
+
 package DAOs;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface GamesDaoInterface
     //Jiri
     Games findById(int id);
     void updatePriceById(int id, int newPrice);
+
+    //Jiri
+    public Games findGameByTitle(String gameTitle) throws DaoException;
 }
