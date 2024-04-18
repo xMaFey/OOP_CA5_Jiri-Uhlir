@@ -4,7 +4,7 @@ package DTOs;
 import java.util.Date;
 
 //Jiri Uhlir
-public class Games {
+public class Game {
     private int id;
     private String gameTitle;
     private String developer;
@@ -12,7 +12,7 @@ public class Games {
     private float gbOfSpace;
     private Date realeaseDate;
 
-    public Games(int gameId, String gameTitle, String developer, int price, float gbOfSpace, Date releaseDate){
+    public Game(int gameId, String gameTitle, String developer, int price, float gbOfSpace, Date releaseDate){
         this.id = gameId;
         this.gameTitle = gameTitle;
         this.developer = developer;
